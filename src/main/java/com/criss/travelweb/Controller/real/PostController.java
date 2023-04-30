@@ -3,10 +3,7 @@ package com.criss.travelweb.Controller.real;
 import com.criss.travelweb.Controller.utils.R;
 import com.criss.travelweb.Controller.utils.Result;
 import com.criss.travelweb.Dao.PostDao;
-
-import com.criss.travelweb.Entity.Book;
 import com.criss.travelweb.Entity.Post;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,17 +27,28 @@ public class PostController {
         //System.out.println("所有的post...");
         return new R(true,postDao.getAll());
     }
-
-    @GetMapping("{id}")
-    public Post getById(@PathVariable Integer id){
+    // why cannot
+  /*  @GetMapping("{postId}")
+    public Post getById(@PathVariable Integer postId){
         System.out.println("根据id post查找...");
-        return postDao.getById(id);
+        return postDao.getById(postId);
+    }*/
+
+    @GetMapping("{postId}")
+    public Result<Post> getByID(@PathVariable Integer postId) {
+        //return service.getById(id);
+        return new Result<Post>(true, postDao.getById(postId));
     }
 
-    //@GetMapping("{id}")
-    public Result<Post> getByID(@PathVariable Integer id) {
-        //return service.getById(id);
-        return new Result<Post>(true, postDao.getById(id));
+    //like search
+    @GetMapping("{title}")
+    public List<Post> getLikePost(@PathVariable String title){
+        return postDao.getLike(title);
+    }
+    //like search
+    @GetMapping("{title}/{content}")
+    public List<Post> getLikePost( @PathVariable String title, @PathVariable String content){
+        return postDao.getLike(title,content);
     }
 
     //删除
@@ -58,18 +66,9 @@ public class PostController {
 
     //INSERT INTO t_user (id,name, password) VALUES(#{id}, #{name}, #{password})
     @PostMapping
-    public Post insert(@RequestBody Integer id, @RequestBody String title, @RequestBody String cotent) {
-        return postDao.add(id,title,cotent);
+    public Post insert(@RequestBody Integer id, @RequestBody String title, @RequestBody String content) {
+        return postDao.insert(id,title,content);
     }
 
-    //like search
-    @GetMapping("{title}")
-    public List<Post> getLikePost(@PathVariable String title){
-        return postDao.getLike(title);
-    }
-    //like search
-    @GetMapping("{title}/{content}")
-    public List<Post> getLikePost( @PathVariable String title, @PathVariable String content){
-        return postDao.getLike(title,content);
-    }
+
 }

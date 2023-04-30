@@ -2,10 +2,7 @@ package com.criss.travelweb.Dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.criss.travelweb.Entity.Post;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -30,6 +27,10 @@ public interface PostDao extends BaseMapper<Post> {
     Post deleteById(Integer postId);
 
     //INSERT INTO t_user (id,name, password) VALUES(#{id}, #{name}, #{password})
-    @Update("INSERT INTO post (postId,postTitle,postContent) VALUES(#{postId}, #{postTitle}, #{postContent})")
-    Post add(Integer postId, String postTitle, String postContent);
+    @Insert("INSERT INTO post (postId,postTitle,postContent) VALUES(#{postId}, #{postTitle}, #{postContent})")
+    Post insert(Integer postId, String postTitle, String postContent);
+
+    //update
+    @Update("update post set postTitle = #{postTitle},postContent = #{postContent} where postId=#{postId}")
+    Post update(Post post);
 }

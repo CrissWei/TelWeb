@@ -77,4 +77,20 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </body>
 
+<script href="https://unpkg.com/vue@2.6.14/dist/vue.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#vue_det',
+        data: {
+            site: "test...",
+            url: "http://localhost/",
+            alexa: "10000"
+        },
+        methods: {
+            details: function() {
+                return  this.site + "test ...";
+            }
+        }
+    })
+</script>
 </html>
